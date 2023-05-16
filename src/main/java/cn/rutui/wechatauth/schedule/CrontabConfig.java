@@ -18,7 +18,7 @@ public class CrontabConfig {
         List<String> msgIdList = new ArrayList<>();
         synchronized (TextReplyService.CACHE) {
             Map<String, Map<Long, String>> cache = TextReplyService.CACHE;
-            log.info("Schedule: all key={}", cache.keySet().toArray());
+            log.info("Schedule: before  key={}", cache.keySet().toArray());
             cache.forEach((msgId, longStringMap) -> {
                 longStringMap.forEach((timestamp, value) -> {
                     if (System.currentTimeMillis() - timestamp > (5 * 60 * 1000)) {
@@ -30,7 +30,7 @@ public class CrontabConfig {
             msgIdList.forEach(msgId -> {
                 cache.remove(msgId);
             });
-            log.info("Schedule: leave key={}", cache.keySet().toArray());
+            log.info("Schedule: after   key={}", cache.keySet().toArray());
         }
     }
 
