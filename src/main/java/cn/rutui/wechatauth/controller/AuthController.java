@@ -33,11 +33,11 @@ public class AuthController {
     //微信消息回调
     @PostMapping(value = "/checkToken")
     public void callback(HttpServletRequest request, HttpServletResponse response, String signature, String timestamp, String nonce) {
-        boolean flag = SignCheckUtils.check(timestamp, nonce, signature);
-        if (!flag) {
-            log.error("SignCheck failed, signature={}", signature);
-            return;
-        }
+//        boolean flag = SignCheckUtils.check(timestamp, nonce, signature);
+//        if (!flag) {
+//            log.error("SignCheck failed, signature={}", signature);
+//            return;
+//        }
         PrintWriter out = null;
         try {
             String respMessage = wechatService.callback(request);

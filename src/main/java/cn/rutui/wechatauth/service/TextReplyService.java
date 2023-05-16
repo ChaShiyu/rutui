@@ -5,6 +5,7 @@ import cn.rutui.wechatauth.util.OpenApiUtils;
 import cn.rutui.wechatauth.util.WechatMessageUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
@@ -35,6 +36,7 @@ public class TextReplyService {
      * @param requestMap requestMap
      * @return String
      */
+    @Cacheable(value="reply", key="#requestMap.get('Content')")
     public String reply(Map<String, String> requestMap) {
         String msgId = requestMap.get(MESSAGE_ID);
         String wechatId = requestMap.get(FROM_USER_NAME);
@@ -45,19 +47,11 @@ public class TextReplyService {
         String content = requestMap.get(CONTENT);
         String reply = null;
         try {
-            if (CACHE.containsKey(msgId)) {
-                reply = (String) CACHE.get(msgId).values().toArray()[0];
-            } else {
-                reply = OpenApiUtils.call(content, restTemplate);
-
-                Map<Long, String> map = new HashMap<>();
-                map.put(System.currentTimeMillis(), reply);
-                CACHE.put(msgId, map);
-            }
+            reply = OpenApiUtils.call(content, restTemplate);
         } catch (Exception e) {
             log.error("call openapi error", e);
         }
-        if (!StringUtils.hasText(content)) {
+        if (!StringUtils.hasText(reply)) {
             reply = DEFAULT_REPLY;
         }
         textMessage.setContent(reply);
