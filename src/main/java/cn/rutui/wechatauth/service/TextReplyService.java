@@ -21,7 +21,7 @@ public class TextReplyService {
     private static final String TO_USER_NAME = "ToUserName";
     private static final String CONTENT = "Content";
 
-    public static final String DEFAULT_REPLY = "invalid question!";
+    private static final String DEFAULT_REPLY = "invalid question!";
 
     @Value("${api.openai.secret}")
     String secret;

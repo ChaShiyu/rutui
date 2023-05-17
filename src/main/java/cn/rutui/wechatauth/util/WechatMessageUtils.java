@@ -1,6 +1,5 @@
 package cn.rutui.wechatauth.util;
 
-import cn.rutui.wechatauth.base.WechatMsgTypeConstant;
 import cn.rutui.wechatauth.model.MusicMessage;
 import cn.rutui.wechatauth.model.NewsMessage;
 import cn.rutui.wechatauth.model.TextMessage;

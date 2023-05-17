@@ -1,6 +1,6 @@
 package cn.rutui.wechatauth.service;
 
-import cn.rutui.wechatauth.base.WechatMsgTypeConstant;
+import cn.rutui.wechatauth.base.WechatMsgType;
 import cn.rutui.wechatauth.util.WechatMessageUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +14,10 @@ import java.util.Map;
 @Slf4j
 @Service
 public class WechatService {
-
     @Autowired
     private TextReplyService textReplyService;
+    @Autowired
+    private EventReplyService eventReplyService;
 
     public String callback(HttpServletRequest request) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
@@ -27,9 +28,10 @@ public class WechatService {
             // 消息类型
             String msgType = requestMap.get("MsgType");
             switch (msgType) {
-                case WechatMsgTypeConstant.MESSAGE_TYPE_TEXT:
-                    // 文本消息处理
+                case WechatMsgType.TEXT:
                     return textReplyService.reply(requestMap);
+                case WechatMsgType.EVENT:
+                    return eventReplyService.reply(requestMap);
                 default:
                     return textReplyService.reply(requestMap);
             }
