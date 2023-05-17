@@ -23,8 +23,8 @@ public class TextReplyService {
 
     public static final String DEFAULT_REPLY = "invalid question!";
 
-    @Value("${api.openai.token}")
-    String token;
+    @Value("${api.openai.secret}")
+    String secret;
     @Autowired
     RestTemplate restTemplate;
 
@@ -44,9 +44,9 @@ public class TextReplyService {
         String content = requestMap.get(CONTENT);
         String reply = null;
         try {
-            reply = OpenApiUtils.call(content, token, restTemplate);
+            reply = OpenApiUtils.call(content, secret, restTemplate);
         } catch (Exception e) {
-            log.error("call openapi error", e);
+            log.error("call openai error, token={}", secret, e);
         }
         if (!StringUtils.hasText(reply)) {
             reply = DEFAULT_REPLY;

@@ -22,10 +22,12 @@ public class OpenApiUtils {
     public static final String URL = "https://api.openai.com/v1/chat/completions";
 
     /**
-     * @param content content
+     * @param content      content
+     * @param secret       secret
+     * @param restTemplate restTemplate
      * @return String
      */
-    public static String call(String content, String token, RestTemplate restTemplate) {
+    public static String call(String content, String secret, RestTemplate restTemplate) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("model", "gpt-3.5-turbo");
 
@@ -38,7 +40,7 @@ public class OpenApiUtils {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
-        headers.add("Authorization", token);
+        headers.add("Authorization", "Bearer " + secret);
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(jsonObject, headers);
 
         ResponseEntity<OpenApiResponse> response = restTemplate.postForEntity(URL, requestEntity, OpenApiResponse.class);
