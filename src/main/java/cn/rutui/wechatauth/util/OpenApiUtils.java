@@ -21,13 +21,11 @@ public class OpenApiUtils {
     //设置秘钥, 和微信公众平台一致
     public static final String URL = "https://api.openai.com/v1/chat/completions";
 
-    public static final String TOKEN = "Bearer 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";
-
     /**
      * @param content content
      * @return String
      */
-    public static String call(String content, RestTemplate restTemplate) {
+    public static String call(String content, String token, RestTemplate restTemplate) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("model", "gpt-3.5-turbo");
 
@@ -40,7 +38,7 @@ public class OpenApiUtils {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
-        headers.add("Authorization", TOKEN);
+        headers.add("Authorization", token);
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(jsonObject, headers);
 
         ResponseEntity<OpenApiResponse> response = restTemplate.postForEntity(URL, requestEntity, OpenApiResponse.class);

@@ -5,6 +5,7 @@ import cn.rutui.wechatauth.util.OpenApiUtils;
 import cn.rutui.wechatauth.util.WechatMessageUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,6 +23,8 @@ public class TextReplyService {
 
     public static final String DEFAULT_REPLY = "invalid question!";
 
+    @Value("${api.openai.token}")
+    String token;
     @Autowired
     RestTemplate restTemplate;
 
@@ -41,7 +44,7 @@ public class TextReplyService {
         String content = requestMap.get(CONTENT);
         String reply = null;
         try {
-            reply = OpenApiUtils.call(content, restTemplate);
+            reply = OpenApiUtils.call(content, token, restTemplate);
         } catch (Exception e) {
             log.error("call openapi error", e);
         }
