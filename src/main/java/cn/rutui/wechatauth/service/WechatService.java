@@ -11,11 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-/**
- * @author C.W
- * @date 2022/5/18 7:32
- * @desc 微信
- */
 @Slf4j
 @Service
 public class WechatService {
@@ -23,13 +18,6 @@ public class WechatService {
     @Autowired
     private TextReplyService textReplyService;
 
-    /**
-     * 微信回复
-     *
-     * @param request
-     * @return
-     * @throws UnsupportedEncodingException
-     */
     public String callback(HttpServletRequest request) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
 

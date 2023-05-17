@@ -2,8 +2,6 @@ package cn.rutui.wechatauth.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -13,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 签名验证工具类
@@ -24,17 +21,7 @@ public class OpenApiUtils {
     //设置秘钥, 和微信公众平台一致
     public static final String URL = "https://api.openai.com/v1/chat/completions";
 
-    public static final String TOKEN = "Bearer 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";
-
-    public Cache<String, String> cache = Caffeine.newBuilder()
-            // 初始容量
-            .initialCapacity(5)
-            // 最大容量
-            .maximumSize(10)
-            // 移除监控
-            .removalListener((key, value, cause) -> log.info(key + "被移除，原因：" + cause))
-            // 过期时间
-            .expireAfterWrite(2, TimeUnit.SECONDS).build();
+    public static final String TOKEN = "Bearer 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";
 
     /**
      * @param content content

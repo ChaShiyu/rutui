@@ -1,11 +1,7 @@
 package cn.rutui.wechatauth.model;
 
 import lombok.Data;
-/**
- * @author C.W
- * @date 2021/11/26 22:20
- * @description 基础消息响应
- */
+
 @Data
 public class BaseMessage {
 

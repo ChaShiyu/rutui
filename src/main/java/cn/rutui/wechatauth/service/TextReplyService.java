@@ -10,25 +10,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
 public class TextReplyService {
 
-    private static final String MESSAGE_ID = "MsgId";
     private static final String FROM_USER_NAME = "FromUserName";
     private static final String TO_USER_NAME = "ToUserName";
     private static final String CONTENT = "Content";
 
-    private static final String DEFAULT_REPLY = "invalid question!";
+    public static final String DEFAULT_REPLY = "invalid question!";
 
     @Autowired
     RestTemplate restTemplate;
-
-    public static Map<String, Map<Long, String>> CACHE = new ConcurrentHashMap<>(8);
 
     /**
      * 自动回复文本内容
@@ -36,9 +31,8 @@ public class TextReplyService {
      * @param requestMap requestMap
      * @return String
      */
-    @Cacheable(value="reply", key="#requestMap.get('Content')")
+    @Cacheable(value="reply", key="#requestMap.get('Content')", unless = "#result=='invalid question!'")
     public String reply(Map<String, String> requestMap) {
-        String msgId = requestMap.get(MESSAGE_ID);
         String wechatId = requestMap.get(FROM_USER_NAME);
         String gongzhonghaoId = requestMap.get(TO_USER_NAME);
 
